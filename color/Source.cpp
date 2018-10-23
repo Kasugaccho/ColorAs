@@ -1,26 +1,50 @@
-#include "DxLib.h"
+ï»¿#include <DxLib.h>
+#include "ColorAs.hpp"
+
+//åˆæœŸåŒ–
+int init() {
+	SetOutApplicationLogValidFlag(FALSE);
+	ChangeWindowMode(TRUE);
+	SetUseCharCodeFormat(DX_CHARCODEFORMAT_UTF8);
+	if (DxLib_Init() == -1) return -1;
+	SetDrawScreen(DX_SCREEN_BACK);
+	return 0;
+}
+//ãƒ«ãƒ¼ãƒ—ç¶™ç¶šå‡¦ç†
+bool loop() {
+	return (CheckHitKeyAll() == 0 && ScreenFlip() == 0 && ClearDrawScreen() == 0 && ProcessMessage() == 0);
+}
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	ChangeWindowMode(TRUE);
-	// ‚c‚wƒ‰ƒCƒuƒ‰ƒŠ‰Šú‰»ˆ—
-	if (DxLib_Init() == -1)
-	{
-		return -1;        // ƒGƒ‰[‚ª‹N‚«‚½‚ç’¼‚¿‚ÉI—¹
-	}
+	//åˆæœŸåŒ–
+	if (init()) return -1;
 
-	LoadGraph("a.jpg", TRUE);
+	constexpr size_t time_num{ 120 };
+	size_t time{};
+	size_t counter{ time_num };
+	std::string str{};
+	color_as::RGB_Color col{ color_as::color_data[time]->rgb };
 
-	while (CheckHitKeyAll() == 0)
+	//ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—
+	while (loop())
 	{
-		// ƒƒbƒZ[ƒWƒ‹[ƒv‚É‘ã‚í‚éˆ—‚ğ‚·‚é
-		if (ProcessMessage() == -1)
-		{
-			break;        // ƒGƒ‰[‚ª‹N‚«‚½‚çƒ‹[ƒv‚ğ”²‚¯‚é
-		}
+		//è‰²å››è§’å½¢ã‚’æç”»
+		DrawBox(0, 0, 300, 300, (int)col.int32Down(), TRUE);
+
+		if (++counter < time_num) continue;
+		counter = 0;
+
+		col = color_as::color_data[time]->rgb;
+		color_as::color_data[time]->sc.output(str);
+
+		clsDx();
+		printfDx(u8"%s(%s)\n", color_as::color_data[time]->name_kanji, color_as::color_data[time]->name_furigana);
+		printfDx(u8"%s", str.c_str());
+		++time;
+		if (time >= color_as::color_data.size()) time = 0;
 	}
 
 	DxLib_End();
-
 	return 0;
 }
