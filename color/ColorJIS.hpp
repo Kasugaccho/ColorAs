@@ -127,8 +127,11 @@ namespace color_as {
 	constexpr ColorData slate_grey(u8"スレートグレイ", u8"slate grey", { std_dk,false_false,std_Gy }, { 2.5,hvc_PB, 3.5,0.5 }, { 81,83,86 });
 	constexpr ColorData lamp_black(u8"ランプブラック", u8"lamp black", { std_v_false,false_false,std_Bk }, { 0,hvc_Gy,1,0 }, { 33,33,33 });
 
+	constexpr size_t jis_color_all_num = 122;
+	using ColorDataArray = std::array<const ColorData* const, jis_color_all_num>;
+
 	//JIS慣用色データまとめ
-	constexpr std::array<const ColorData* const, 122> color_data{
+	constexpr ColorDataArray color_data{
 	&sakura_iro_,
 	&kou_bai_iro_,
 	&sango_iro_,

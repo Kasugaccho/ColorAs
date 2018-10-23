@@ -5,7 +5,7 @@
 
 namespace color_as {
 
-	using Str = const char* const;
+	using ccc = const char* const;
 
 	//系統色名ー＞基本色名
 	enum StdType :uint_fast8_t {
@@ -13,11 +13,13 @@ namespace color_as {
 		std_B, std_PB, std_P, std_RP, std_Wt, std_Gy, std_Bk,
 		StdTypeNum
 	};
+
 	//系統色名ー＞基本色名
-	constexpr std::array<Str, StdTypeNum> std_type_name{
+	using StdTypeArray = std::array<ccc, StdTypeNum>;
+	constexpr StdTypeArray std_type_name{
 		u8"R",u8"YR",u8"Y",u8"YG",u8"G",u8"BG",u8"B",u8"PB",u8"P",u8"RP",u8"Wt",u8"Gy",u8"Bk"
 	};
-	constexpr std::array<Str, StdTypeNum> std_type_name_jp{
+	constexpr StdTypeArray std_type_name_jp{
 	u8"赤",u8"黄赤",u8"黄",u8"黄緑",u8"緑",u8"青緑",u8"青",u8"青紫",u8"紫",u8"赤紫",u8"白",u8"灰色",u8"黒"
 	};
 
@@ -28,7 +30,8 @@ namespace color_as {
 		std_v_md, std_v_dk, std_v_false,
 		ModTypeNum
 	};
-	constexpr std::array<Str, ModTypeNum> mod_type_name{
+	using ModTypeArray = std::array<ccc, ModTypeNum>;
+	constexpr ModTypeArray mod_type_name_jp{
 		u8"あざやかな",u8"明るい",u8"つよい",u8"こい",u8"うすい",
 		u8"やわらかい",u8"くすんだ",u8"暗い",u8"ごくうすい",u8"明るい灰みの",
 		u8"灰みの",u8"暗い灰みの",u8"ごく暗い",u8"うすい",u8"明るい",
@@ -42,13 +45,14 @@ namespace color_as {
 		false_pb,false_p,false_rp,false_p_r,false_false,
 		ModColorNum
 	};
-	constexpr std::array<Str, ModColorNum> mod_color_name{
+	using ModColorArray = std::array<ccc, ModColorNum>;
+	constexpr ModColorArray mod_color_name{
 		u8"r",u8"y",u8"g",u8"b",u8"p",
 		u8"r",u8"y・r",u8"yr",u8"r・y",u8"y",
 		u8"g・y",u8"yg",u8"g",u8"bg",u8"b",
 		u8"pb",u8"p",u8"rp",u8"p・r",u8"",
 	};
-	constexpr std::array<Str, ModColorNum> mod_color_name_jp{
+	constexpr ModColorArray mod_color_name_jp{
 		//有彩色
 		u8"赤",u8"黄",u8"緑",u8"青",u8"紫",
 		//無彩色
@@ -76,12 +80,12 @@ namespace color_as {
 				//無彩色
 			case std_Wt:case std_Gy:case std_Bk:
 				str_ += mod_color_name_jp[mod];
-				str_ += mod_type_name[tone];
+				str_ += mod_type_name_jp[tone];
 				break;
 
 				//有彩色
 			default:
-				str_ += mod_type_name[tone];
+				str_ += mod_type_name_jp[tone];
 				str_ += mod_color_name_jp[mod];
 				if (mod >= 5) break;
 				switch (tone)
@@ -114,26 +118,30 @@ namespace color_as {
 		uint_fast8_t red{};
 		uint_fast8_t green{};
 		uint_fast8_t blue{};
+		uint_fast8_t alpha{};
 
 	public:
 		//コンストラクタ
-		constexpr RGB_Color(const uint_fast8_t r_, const uint_fast8_t g_, const uint_fast8_t b_)
-			:red(r_), green(g_), blue(b_) {}
+		constexpr RGB_Color(const uint_fast8_t r_, const uint_fast8_t g_, const uint_fast8_t b_, const uint_fast8_t a_ = 0xff)
+			:red(r_), green(g_), blue(b_), alpha(a_) {}
 		//出力
 		uint_fast8_t r() const { return this->red; }
 		uint_fast8_t g() const { return this->green; }
 		uint_fast8_t b() const { return this->blue; }
+		uint_fast8_t a() const { return this->alpha; }
 
 		int_fast32_t int32Up() const {
 			int_fast32_t num;
 			num = (int_fast32_t)red << 24;
 			num += (int_fast32_t)green << 16;
 			num += (int_fast32_t)blue << 8;
+			num += (int_fast32_t)alpha;
 			return num;
 		}
 		int_fast32_t int32Down() const {
 			int_fast32_t num;
-			num = (int_fast32_t)red << 16;
+			num = (int_fast32_t)alpha << 24;
+			num += (int_fast32_t)red << 16;
 			num += (int_fast32_t)green << 8;
 			num += (int_fast32_t)blue;
 			return num;
@@ -167,14 +175,14 @@ namespace color_as {
 	class ColorData {
 	public:
 		//名前
-		Str name_kanji;
+		ccc name_kanji;
 		//ふりがな/ローマ字
-		Str name_furigana;
+		ccc name_furigana;
 		const SystemColor sc;
 		const HVC hvc;
 		const RGB_Color rgb;
 
-		constexpr ColorData(Str kanji_, Str furigana_, const SystemColor& type_, const HVC& hvc_, const RGB_Color& rgb_)
+		constexpr ColorData(ccc kanji_, ccc furigana_, const SystemColor& type_, const HVC& hvc_, const RGB_Color& rgb_)
 			:name_kanji(kanji_), name_furigana(furigana_), sc(type_), hvc(hvc_), rgb(rgb_) {}
 	};
 
