@@ -24,7 +24,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	size_t time{};
 	size_t counter{ time_num };
 	std::string str{};
-	color_as::RGB_Color col{ color_as::color_data[time]->rgb };
+	color::RGB_Color col{ color::color_data[time]->rgb };
 
 	//メインループ
 	while (loop())
@@ -35,14 +35,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		if (++counter < time_num) continue;
 		counter = 0;
 
-		col = color_as::color_data[time]->rgb;
-		color_as::color_data[time]->sc.output(str);
+		col = color::color_data[time]->rgb;
+		color::color_data[time]->sc.output(str);
 
 		clsDx();
-		printfDx(u8"%s(%s)\n", color_as::color_data[time]->name_kanji, color_as::color_data[time]->name_furigana);
+		printfDx(u8"%s(%s)\n", color::color_data[time]->name_kanji, color::color_data[time]->name_furigana);
 		printfDx(u8"%s", str.c_str());
 		++time;
-		if (time >= color_as::color_data.size()) time = 0;
+		if (time >= color::color_data.size()) time = 0;
 	}
 
 	DxLib_End();

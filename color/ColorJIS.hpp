@@ -1,7 +1,15 @@
-#pragma once
-#include "ColorSystem.hpp"
+//////////-//////////-//////////-//////////-//////////
+//                       Color-JIS                       //
+//                                                        //
+//             Ascll Project - Color Library             //
+//                                                        //
+//                   Made by Gaccho.                   //
+//////////-//////////-//////////-//////////-//////////
 
-namespace color_as {
+#ifndef ASCLL_PROJECT_COLOR_LIBRARY_COLOR_JIS
+#define ASCLL_PROJECT_COLOR_LIBRARY_COLOR_JIS
+
+namespace color {
 
 	//JIS慣用色データ
 	constexpr ColorData sakura_iro_(u8"桜色", u8"さくらいろ", { std_vp,true_p,std_R }, { 10,hvc_RP, 9,2.5 }, { 251,218,222 });
@@ -256,3 +264,5 @@ namespace color_as {
 	&lamp_black
 	};
 }
+
+#endif

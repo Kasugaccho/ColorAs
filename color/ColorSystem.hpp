@@ -1,9 +1,15 @@
-#pragma once
-#include <cstdint>
-#include <string>
-#include <array>
+//////////-//////////-//////////-//////////-//////////
+//                    Color-System                      //
+//                                                        //
+//             Ascll Project - Color Library             //
+//                                                        //
+//                   Made by Gaccho.                   //
+//////////-//////////-//////////-//////////-//////////
 
-namespace color_as {
+#ifndef ASCLL_PROJECT_COLOR_LIBRARY_COLOR_SYSTEM
+#define ASCLL_PROJECT_COLOR_LIBRARY_COLOR_SYSTEM
+
+namespace color {
 
 	using ccc = const char* const;
 
@@ -124,6 +130,8 @@ namespace color_as {
 		//コンストラクタ
 		constexpr RGB_Color(const uint_fast8_t r_, const uint_fast8_t g_, const uint_fast8_t b_, const uint_fast8_t a_ = 0xff)
 			:red(r_), green(g_), blue(b_), alpha(a_) {}
+		RGB_Color() = default;
+
 		//出力
 		uint_fast8_t r() const { return this->red; }
 		uint_fast8_t g() const { return this->green; }
@@ -189,3 +197,5 @@ namespace color_as {
 
 
 }
+
+#endif

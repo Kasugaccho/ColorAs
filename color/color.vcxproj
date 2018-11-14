@@ -141,6 +141,7 @@
     <ClInclude Include="ColorAs.hpp" />
     <ClInclude Include="ColorJIS.hpp" />
     <ClInclude Include="ColorSystem.hpp" />
+    <ClInclude Include="PCCS_RGB.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
